@@ -1,0 +1,13 @@
+{
+  "name": "Movie_finder",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "devDependencies": {
+    "jest": "^26.1.0"
+  },
+  "scripts": {
+    "dev" : "parcel src/index.html",
+    "build" : "parcel build src/index.html"
+  }
+}
