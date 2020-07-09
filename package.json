@@ -5,7 +5,9 @@
   "license": "MIT",
   "devDependencies": {
     "@babel/plugin-transform-modules-commonjs": "^7.10.4",
-    "jest": "^26.1.0"
+    "@types/jest": "^26.0.4",
+    "jest": "^26.1.0",
+    "node-fetch": "^2.6.0"
   },
   "scripts": {
     "dev": "parcel src/index.html",
