@@ -120,18 +120,6 @@ export default class View {
     this._hideSuggestions()
   }
 
-  _debounceEvent(callback,timeout) {
-    let timer
-    return function(){
-      let that = this
-      let args = arguments
-      clearTimeout(timer)
-      timer = setTimeout(()=>{
-	callback.apply(that,args)
-      },timeout)
-    }
-  }
-
   removeSelectedActor(id){
     this.selectedContainer.querySelector(`#id-${id}`).remove()
   }
