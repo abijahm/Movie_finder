@@ -20,13 +20,28 @@ const searchResults = {
 
 describe("Test apps Model",() => {
   global.fetch = jest.fn(() => Promise.resolve({
-    json: () => Promise.resolve(searchResults)
+    json: () => Promise.resolve({
+      "genres": [
+	{
+	  "id": 28,
+	  "name": "Action"
+	},
+	{
+	  "id": 12,
+	  "name": "Adventure"
+	}
+      ]
+    })
   }))
 
   const apiKey = "ghgh34"
   const moviesModel = new Model(apiKey)
   
   it("Should return actors", async () => { 
+    global.fetch = jest.fn(() => Promise.resolve({
+      json: () => Promise.resolve(searchResults)
+    }))
+
     let results = await moviesModel.search("person", "Bradley") 
     let calledUrl = `https://api.themoviedb.org/3/search/person?api_key=${apiKey}&query=Bradley`
 
@@ -62,17 +77,20 @@ describe("Test apps Model",() => {
 	   {
 	     id: 3000,
 	     title: "Transformers",
-	     vote_average: 6.5
+	     vote_average: 6.5,
+	     genre_ids: [28, 12]
 	   },
 	   {
 	     id: 4000,
 	     title: "Terminator",
-	     vote_average: 6.5
+	     vote_average: 6.5,
+	     genre_ids: [28, 12]
 	   },
 	   {
 	     id: 5000,
 	     title: "Transporter",
-	     vote_average: 6.5
+	     vote_average: 6.5,
+	     genre_ids: [28, 12]
 	   }
 	 ]
        },
@@ -82,17 +100,20 @@ describe("Test apps Model",() => {
 	   {
 	     id: 3000,
 	     title: "Transformers",
-	     vote_average: 6.5
+	     vote_average: 6.5,
+	     genre_ids: [28, 12]
 	   },
 	   {
 	     id: 6000,
 	     title: "Tete a tete",
-	     vote_average: 6.5
+	     vote_average: 6.5,
+	     genre_ids: [28, 12]
 	   },
 	   {
 	     id: 8000,
 	     title: "Riff raff",
-	     vote_average: 6.5
+	     vote_average: 6.5,
+	     genre_ids: [28, 12]
 	   }
 	 ]
        },
@@ -102,17 +123,20 @@ describe("Test apps Model",() => {
 	   {
 	     id: 3001,
 	     title: "Malooned!",
-	     vote_average: 6.5
+	     vote_average: 6.5,
+	     genre_ids: [28, 12]
 	   },
 	   {
 	     id: 4001,
 	     title: "Nairobi half life",
-	     vote_average: 6.5
+	     vote_average: 6.5,
+	     genre_ids: [28, 12]
 	   },
 	   {
 	     id: 5001,
 	     title: "Debt collector",
-	     vote_average: 6.5
+	     vote_average: 6.5,
+	     genre_ids: [28, 12]
 	   }
 	 ]
        }
@@ -142,6 +166,14 @@ describe("Test apps Model",() => {
        moviesModel.addSelected(actors[2])
        costared = moviesModel.getCoStaredMovies()
        expect(costared.length).toBe(0) 
+     })
+
+     it("Movies Genres should be stringifyed", () => {
+       moviesModel.clearSelected()
+       moviesModel.addSelected(actors[0])
+       let staredMovies = moviesModel.getCoStaredMovies()
+       expect(staredMovies[0].genres).toBeDefined()
+       expect(staredMovies[0].genres[0]).toBe("Action")
      })
    })
 })

@@ -1,7 +1,18 @@
+
 export default class MoviesModel {
   #selectedActors = new Map()
+  #genreDict = new Map()
   constructor(apiKey){
     this.apiKey = apiKey;
+    this._getGenres()
+  }
+
+  async _getGenres(){
+    let response = await fetch(`https://api.themoviedb.org/3/genre/movie/list?api_key=${this.apiKey}`)
+    let { genres } = await response.json() 
+    genres.forEach(genre => {
+      this.#genreDict.set(genre.id, genre.name)
+    })
   }
 
   async search(kind = "person", searchStr){
@@ -27,6 +38,10 @@ export default class MoviesModel {
     this.#selectedActors.delete(actorId)
   }
 
+  clearSelected(){
+    this.#selectedActors.clear()
+  }
+
   getCoStaredMovies(){
     let coStaredMovies = []  
     let size = this.#selectedActors.size
@@ -43,7 +58,13 @@ export default class MoviesModel {
       }) 
       index++
     }
-    return coStaredMovies
+
+    coStaredMovies = coStaredMovies.map(movie => {
+      movie.genres = movie.genre_ids.map(id => this.#genreDict.get(id))
+      return movie
+    })
+
+    return coStaredMovies 
   }
 
 }

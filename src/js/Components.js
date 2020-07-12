@@ -3,7 +3,7 @@ export const selectedActorSpan = (id,name) => {
   const closeSvg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M10 8.586L2.929 1.515 1.515 2.929 8.586 10l-7.071 7.071 1.414 1.414L10 11.414l7.071 7.071 1.414-1.414L11.414 10l7.071-7.071-1.414-1.414L10 8.586z"/></svg>`
 
   const spanHtml = `
-  <span id=${id}>${name}${closeSvg}</span>`
+  <span id=id-${id}>${name}${closeSvg}</span>`
   
   const fakediv = document.createElement("div")
   fakediv.innerHTML = spanHtml
@@ -13,22 +13,22 @@ export const selectedActorSpan = (id,name) => {
 
 export const searchSuggestion = (id, name) => {
   const suggestionParagraph = document.createElement("p")
-  suggestionParagraph.id = id
+  suggestionParagraph.id = `id-${id}`
   suggestionParagraph.innerText = name
   return suggestionParagraph
 }
 
-export const movieCard = (movie, genresDict) => {
+export const movieCard = (movie) => {
   const cardHtml = `
-    <article class="moviecard" id="${movie.id}">
+    <article class="moviecard" id="id-${movie.id}">
       <img src="https://image.tmdb.org/t/p/w500${movie.poster_path}" alt="${movie.title}">
       <div class="movieinfo">
 	<h2 class="title">${movie.title}</h2>
 	<article class="overview">
 	  <h3>Overview</h3>
 	  <p class="synopsis" title="${movie.overview}">${movie.overview}</p>
-	  <p>
-	    Genre: <span class="genre">${movie.genres_ids.map(id => genresDict.get(id)).join("/")}</span>
+	  <p title"${movie.genres.join("/")}">
+	    Genre: <span class="genre">${movie.genres.join("/")}</span>
 	  </p>
 	  <p>
 	    Release: <span class="releasedate">${movie.release_date}</span>
