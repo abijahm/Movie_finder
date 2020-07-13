@@ -5,6 +5,10 @@ export default class Controller {
     this.model = model
   }
 
+  setView(view){
+    this.view = view
+  }
+
   async handleSuggest(searchString){
     let { results } = await this.model.search("person",searchString)
     this.view.renderSuggestions(results.slice(0,5))
