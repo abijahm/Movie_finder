@@ -68,7 +68,6 @@ export default class View {
 
   _updateInputPlaceholder(){
     const selectedCount = this.selectedContainer.children.length
-    console.log(selectedCount)
     if(selectedCount > 0){
       this.searchInput.placeholder = "Enter another actor's name"
     }else{
