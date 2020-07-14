@@ -11,7 +11,7 @@ export default class Controller {
 
   async handleSuggest(searchString){
     let { results } = await this.model.search("person",searchString)
-    this.view.renderSuggestions(results.slice(0,5))
+    this.view.renderSuggestions(results.slice(0,5)) //limit suggestions
   }
 
   async handleAddSelected(id, actorName) {

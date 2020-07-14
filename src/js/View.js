@@ -66,9 +66,20 @@ export default class View {
     })
   }
 
+  _updateInputPlaceholder(){
+    const selectedCount = this.selectedContainer.children.length
+    console.log(selectedCount)
+    if(selectedCount > 0){
+      this.searchInput.placeholder = "Enter another actor's name"
+    }else{
+      this.searchInput.placeholder = "Enter actor's name"
+    }
+  }
+
   _extractId(idstr){
     return idstr.split("-")[1]
   }
+  
   _clearSearchField(){
     this.searchInput.value = ""
   }
@@ -122,10 +133,12 @@ export default class View {
 
   removeSelectedActor(id){
     this.selectedContainer.querySelector(`#id-${id}`).remove()
+    this._updateInputPlaceholder()
   }
 
   renderSelected(id, actorName){
     this.selectedContainer.appendChild(selectedActorSpan(id,actorName))
+    this._updateInputPlaceholder()
   }
 
   renderSuggestions(suggestions){
